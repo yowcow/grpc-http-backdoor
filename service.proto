@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package service;
+
+message Person {
+    required int32 id = 1;
+    required string name = 2;
+    optional string address = 3;
+}
+
+message Void {}
+
+service Data {
+    rpc GetPerson (Void) returns (Person);
+}
