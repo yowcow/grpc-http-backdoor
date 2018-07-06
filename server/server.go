@@ -6,7 +6,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/yowcow/test/grpc-test/server/httpserver"
+	"github.com/yowcow/grpc-http-backdoor/server/httpserver"
 	"google.golang.org/grpc"
 )
 

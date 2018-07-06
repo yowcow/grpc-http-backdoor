@@ -7,8 +7,8 @@ import (
 	"math/rand"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/yowcow/test/grpc-test/server/httpserver"
-	pb "github.com/yowcow/test/grpc-test/service"
+	"github.com/yowcow/grpc-http-backdoor/server/httpserver"
+	pb "github.com/yowcow/grpc-http-backdoor/service"
 	"google.golang.org/grpc"
 )
 

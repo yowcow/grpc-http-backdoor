@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	pb "github.com/yowcow/test/grpc-test/service"
+	pb "github.com/yowcow/grpc-http-backdoor/service"
 	"google.golang.org/grpc"
 )
 
