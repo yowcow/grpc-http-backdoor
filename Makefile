@@ -11,10 +11,10 @@ service/service.pb.go: service.proto
 	protoc --go_out=plugins=grpc:$(dir $@) $<
 
 grpc-server:
-	go build -o $@ server/main.go
+	go build -o $@ ./server
 
 grpc-client:
-	go build -o $@ client/main.go
+	go build -o $@ ./client
 
 clean:
 	rm -rf service/service.pb.go grpc-server grpc-client

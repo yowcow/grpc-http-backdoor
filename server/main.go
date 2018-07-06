@@ -1,62 +1,56 @@
 package main
 
 import (
-	"context"
 	"flag"
-	_ "fmt"
+	"fmt"
 	"log"
 	"net"
 	"os"
-
-	"github.com/golang/protobuf/proto"
-	pb "github.com/yowcow/test/grpc-test/service"
-	"google.golang.org/grpc"
+	"os/signal"
+	"syscall"
 )
 
-type Server struct {
-	logger *log.Logger
-}
-
-func (s *Server) GetPerson(ctx context.Context, v *pb.Void) (*pb.Person, error) {
-	s.logger.Println("rpc GetPerson() called")
-
-	p := new(pb.Person)
-	p.Id = proto.Int32(123)
-	p.Name = proto.String("Hoge Fuga")
-	p.Address = proto.String("234 Foo Bar")
-
-	return p, nil
-}
-
-var (
-	_ pb.DataServer = (*Server)(nil)
-)
-
-var network string
-var address string
+var grpcNetwork string
+var grpcAddress string
+var httpNetwork string
+var httpAddress string
 var logger *log.Logger
 
 func init() {
-	flag.StringVar(&network, "network", "tcp", "network to listen")
-	flag.StringVar(&address, "address", ":9999", "address to listen")
+	flag.StringVar(&grpcNetwork, "grpc-network", "tcp", "network to listen for grpc")
+	flag.StringVar(&grpcAddress, "grpc-address", ":9999", "address to listen for grpc")
+	flag.StringVar(&httpNetwork, "http-network", "tcp", "network to listen for http")
+	flag.StringVar(&httpAddress, "http-address", ":9998", "address to listen for http")
 	flag.Parse()
 }
 
 func init() {
-	logger = log.New(os.Stdout, "", log.Ldate|log.Ltime|log.Lshortfile)
+	logger = log.New(os.Stdout, fmt.Sprintf("[%d] ", os.Getpid()), log.Ldate|log.Ltime|log.Lshortfile)
 }
 
 func main() {
-	ln, err := net.Listen(network, address)
+	grpcln, err := net.Listen(grpcNetwork, grpcAddress)
 	if err != nil {
 		logger.Fatalln(err)
 	}
 
-	grpcsv := grpc.NewServer()
-	sv := &Server{logger}
-	pb.RegisterDataServer(grpcsv, sv)
+	httpln, err := net.Listen(httpNetwork, httpAddress)
+	if err != nil {
+		logger.Fatalln(err)
+	}
 
-	logger.Println("Starting gRPC server")
+	app := &App{logger}
+	sv := app.NewServer()
 
-	grpcsv.Serve(ln)
+	go func() {
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, syscall.SIGTERM)
+		<-c
+		logger.Println("Stopping server gracefully")
+		sv.GracefulStop()
+	}()
+
+	logger.Println("Server starting")
+	sv.Serve(grpcln, httpln)
+	logger.Println("Server stopped")
 }
