@@ -332,6 +332,14 @@ DISTRIBUTIONS
       Module::Build::WithXSpp 0.14
       autodie 0
       perl 5.008
+  Hijk-0.27
+    pathname: G/GU/GUGOD/Hijk-0.27.tar.gz
+    provides:
+      Hijk 0.27
+    requirements:
+      CPAN::Meta 0
+      ExtUtils::MakeMaker 6.36
+      Time::HiRes 0
   IO-Socket-SSL-2.056
     pathname: S/SU/SULLR/IO-Socket-SSL-2.056.tar.gz
     provides:

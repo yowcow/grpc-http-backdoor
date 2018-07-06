@@ -4,6 +4,17 @@ use Test::More;
 
 use_ok 'MyService';
 
+subtest 'MyService::Void' => sub {
+    my $v = MyService::Service::Void->new;
+
+    isa_ok $v, 'MyService::Service::Void';
+
+    my $bytes = MyService::Service::Void->encode($v);
+    my $v2 = MyService::Service::Void->decode($bytes);
+
+    isa_ok $v2, 'MyService::Service::Void';
+};
+
 subtest 'MyService::Person' => sub {
     my $p = MyService::Service::Person->new;
 

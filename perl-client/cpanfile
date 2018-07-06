@@ -1,1 +1,2 @@
 requires 'Google::ProtocolBuffers::Dynamic';
+requires 'Hijk';
