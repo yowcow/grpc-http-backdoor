@@ -5,7 +5,7 @@ carton-install:
 
 lib/MyService.pm: ../service.proto
 	mkdir -p $(dir $@)
-	carton exec -- protoc --perl-gpd_out=package=MyService:$(dir $@) -I$(dir $<) $(notdir $<)
+	carton exec -- protoc --perl-gpd_out=package=MyService:$(dir $@) -I$(dir $<) $<
 
 clean:
 	rm -rf lib/MyService.pm

@@ -112,6 +112,7 @@ DISTRIBUTIONS
       JSON::PP 0
       Module::Load 0
       Path::Tiny 0.077
+      PkgConfig 0.14026
       Test2::API 1.302015
       Test2::Require 0.000060
       Text::ParseWords 3.26
@@ -485,6 +486,14 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  PkgConfig-0.19026
+    pathname: P/PL/PLICEASE/PkgConfig-0.19026.tar.gz
+    provides:
+      PkgConfig 0.19026
+    requirements:
+      ExtUtils::MakeMaker 6.56
+      Test::More 0.94
+      perl 5.006000
   Scope-Guard-0.21
     pathname: C/CH/CHOCOLATE/Scope-Guard-0.21.tar.gz
     provides:
