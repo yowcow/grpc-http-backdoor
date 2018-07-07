@@ -8,6 +8,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/yowcow/grpc-http-backdoor/server/app"
+	"github.com/yowcow/grpc-http-backdoor/server/server"
 )
 
 var grpcNetwork string
@@ -39,8 +42,8 @@ func main() {
 		logger.Fatalln(err)
 	}
 
-	app := &App{logger}
-	sv := app.NewServer()
+	a := app.New(logger)
+	sv := server.New(a, logger)
 
 	go func() {
 		c := make(chan os.Signal, 1)

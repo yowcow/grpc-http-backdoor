@@ -14,8 +14,8 @@ import (
 func (s *Server) GetHello(w http.ResponseWriter, req *http.Request) {
 	s.logger.Println("http GetHello() called")
 
-	time.Sleep(10 * time.Second)
-	fmt.Fprintln(w, "Hello world")
+	time.Sleep(5 * time.Second)
+	fmt.Fprint(w, "Hello world")
 }
 
 func (s *Server) GetPerson(w http.ResponseWriter, req *http.Request) {

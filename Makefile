@@ -1,4 +1,15 @@
-all: $(GOPATH)/bin/protoc-gen-go $(GOPATH)/src/google.golang.org/grpc service/service.pb.go grpc-server grpc-client
+TARGETS := \
+	$(GOPATH)/bin/dep \
+	$(GOPATH)/bin/protoc-gen-go \
+	$(GOPATH)/src/google.golang.org/grpc \
+	service/service.pb.go \
+	grpc-server \
+	grpc-client
+
+all: $(TARGETS)
+
+$(GOPATH)/bin/dep:
+	curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 $(GOPATH)/bin/protoc-gen-go:
 	go get -u -v github.com/golang/protobuf/protoc-gen-go
@@ -25,4 +36,7 @@ run-server:
 run-client:
 	./grpc-client
 
-.PHONY: all clean run-server run-client
+test:
+	go test ./...
+
+.PHONY: all clean run-server run-client test

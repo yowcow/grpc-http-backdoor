@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"context"
@@ -7,6 +7,7 @@ import (
 	"sync"
 
 	"github.com/yowcow/grpc-http-backdoor/server/httpserver"
+	pb "github.com/yowcow/grpc-http-backdoor/service"
 	"google.golang.org/grpc"
 )
 
@@ -15,6 +16,20 @@ type Server struct {
 	httpsv     *httpserver.Server
 	httpsvDone chan struct{}
 	logger     *log.Logger
+}
+
+func New(app pb.DataServer, logger *log.Logger) *Server {
+	grpcsv := grpc.NewServer()
+	pb.RegisterDataServer(grpcsv, app)
+
+	httpsv := httpserver.New(logger)
+	httpsv.RegisterDataServer(app)
+
+	return &Server{
+		grpcsv: grpcsv,
+		httpsv: httpsv,
+		logger: logger,
+	}
 }
 
 func (sv *Server) Serve(grpcln net.Listener, httpln net.Listener) {
