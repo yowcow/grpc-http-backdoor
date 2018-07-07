@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/yowcow/grpc-http-backdoor.svg?branch=master)](https://travis-ci.org/yowcow/grpc-http-backdoor)
+
 gRPC Server with HTTP Backdoor
 ==============================
 
